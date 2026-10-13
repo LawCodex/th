@@ -34,7 +34,7 @@ THDIG = str.maketrans("๐๑๒๓๔๕๖๗๘๙", "0123456789")
 STRUCT_RANK = {"5": 0, "6": 0, "22": 0, "7": 1, "8": 2, "12": 2, "13": 2, "9": 3}
 ARTICLE = {"4", "10"}
 ART_RE = re.compile(r"^((?:มาตรา|ข้อ)\s*[๐-๙0-9]+(?:\s*/\s*[๐-๙0-9]+)?"
-                    r"(?:\s*(?:ทวิ|ตรี|จัตวา|เบญจ|ฉ|สัตต|อัฏฐ|นว|ทศ|เอกาทศ|ทวาทศ|เตรส|จตุทศ|ปัณรส|โสฬส)\S*)?)\s*")
+                    r"(?:\s*(?:ทวิ|ตรี|จัตวา|เบญจ|ฉ|สัตต|อัฏฐ|นว|ทศ|เอกาทศ|ทวาทศ|เตรส|จตุทศ|ปัณรส|โสฬส)\S*)?(?:\s*\[\^\d+\])*)\s*")
 
 
 def translit(code):
@@ -64,6 +64,7 @@ def blocks(html, fnmap):
     out = []
 
     def table_html(t):
+        t.attrs = {}
         for tag in t.find_all(True):
             for a in list(tag.attrs):
                 if a not in ("colspan", "rowspan"):
